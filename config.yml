@@ -1,0 +1,7 @@
+mysqlserver: "127.0.0.1:3306"
+mysqluser: "root"
+mysqldb: "homestead"
+mysqlpw: ""
+redisserver: "127.0.0.1:6379"
+redispassword: ""
+redisdb: 0
