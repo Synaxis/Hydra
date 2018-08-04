@@ -44,7 +44,7 @@ func (tM *TheaterManager) UGAM(event gs.EventClientFESLCommand) {
 		args = append(args, index)
 		args = append(args, value)
 	}
-	_, err := tM.stmtUpdateGame.Exec(event.Process.Msg["GID"], Shard)
+	_, err := tM.stmtUpdateGame.Exec(event.Process.Msg["GID"])
 	if err != nil {
 		log.Panicln(err)
 	}

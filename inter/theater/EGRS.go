@@ -12,7 +12,7 @@ func (tM *TheaterManager) EGRS(event gs.EventClientFESLCommand) {
 	}
 
 	if event.Process.Msg["ALLOWED"] == "1" {
-		_, err := tM.stmtGameIncreaseJoining.Exec(event.Process.Msg["GID"], Shard)
+		_, err := tM.stmtGameIncreaseJoining.Exec(event.Process.Msg["GID"], )
 		if err != nil {
 			log.Panicln(err)
 		}

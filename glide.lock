@@ -1,0 +1,33 @@
+hash: 1aa9fd49aa339a190b7f8af7d65f5e98509f96d7015d8d777603cad8dedcab60
+updated: 2018-08-04T12:08:35.4101445-03:00
+imports:
+- name: github.com/go-redis/redis
+  version: 480db94d33e6088e08d628833b6c0705451d24bb
+  subpackages:
+  - internal
+  - internal/consistenthash
+  - internal/hashtag
+  - internal/pool
+  - internal/proto
+  - internal/singleflight
+  - internal/util
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gorilla/mux
+  version: e3702bed27f0d39777b0b37b664b6280e8ef8fbf
+- name: github.com/sirupsen/logrus
+  version: 3e01752db0189b9157070a0e1668a620f9a85da2
+- name: github.com/Synaxis/mysql
+  version: a0583e0143b1624142adab07e0e97fe106d99561
+- name: golang.org/x/crypto
+  version: 56440b844dfe139a8ac053f4ecac0b20b79058f4
+  subpackages:
+  - ssh/terminal
+- name: golang.org/x/sys
+  version: 0ffbfd41fbef8ffcf9b62b0b0aa3a5873ed7a4fe
+  subpackages:
+  - unix
+  - windows
+- name: gopkg.in/yaml.v2
+  version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
+testImports: []

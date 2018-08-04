@@ -8,11 +8,9 @@ import (
 	"os/signal"
 	"runtime"
 
-	"github.com/Synaxis/Hydra/inter/gs"
 	"github.com/Synaxis/Hydra/inter/core"
 	"github.com/Synaxis/Hydra/inter/fesl"
 	"github.com/Synaxis/Hydra/inter/log"
-	"github.com/Synaxis/Hydra/inter/MM"
 	"github.com/Synaxis/Hydra/inter/theater"
 	"github.com/go-redis/redis"
 	"github.com/gorilla/mux"
@@ -61,7 +59,7 @@ var (
 
 	AppName = "HeroesServer"
 
-	Shard string
+
 )
 
 func emtpyHandler(w http.ResponseWriter, r *http.Request) {
@@ -170,13 +168,7 @@ func main() {
 	_, err = redisClient.Ping().Result()
 	if err != nil {
 		log.Fatalln("Error connecting to Redis:", err)
-	}
-
-	Shard := gs.BF2RandomUnsafe(6)
-	log.Noteln("Starting as: " + Shard)
-	MM.Shard = Shard
-	theater.Shard = Shard
-	fesl.Shard = Shard
+	}	
 
 	feslManager := new(fesl.FeslManager)
 	feslManager.New("Fesl", "18270", certFileFlag, keyFileFlag, false, dbSQL, redisClient)

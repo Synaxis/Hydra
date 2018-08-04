@@ -88,7 +88,7 @@ func (tM *TheaterManager) CGAM(event gs.EventClientFESLCommand) {
 	event.Client.Answer("CGAM", answer, 0x0)
 
 	// Create game in database
-	_, err = tM.stmtAddGame.Exec(gameID, Shard, addr.IP.String(), event.Process.Msg["PORT"], event.Process.Msg["B-version"], event.Process.Msg["JOIN"], event.Process.Msg["B-U-map"], 0, 0, event.Process.Msg["MAX-PLAYERS"], 0, 0, "")
+	_, err = tM.stmtAddGame.Exec(gameID, addr.IP.String(), event.Process.Msg["PORT"], event.Process.Msg["B-version"], event.Process.Msg["JOIN"], event.Process.Msg["B-U-map"], 0, 0, event.Process.Msg["MAX-PLAYERS"], 0, 0, "")
 	if err != nil {
 		log.Panicln(err)
 	}

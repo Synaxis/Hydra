@@ -1444,7 +1444,7 @@ ALTER TABLE `game_stats`
 -- Индексы таблицы `games`
 --
 ALTER TABLE `games`
-  ADD PRIMARY KEY (`gid`,`shard`);
+  ADD PRIMARY KEY (`gid`);
 
 --
 -- Индексы таблицы `jobs`

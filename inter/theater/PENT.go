@@ -32,12 +32,12 @@ func (tM *TheaterManager) PENT(event gs.EventClientFESLCommand) {
 
 	switch stats["c_team"] {
 	case "1":
-		_, err = tM.stmtGameIncreaseTeam1.Exec(event.Process.Msg["GID"], Shard)
+		_, err = tM.stmtGameIncreaseTeam1.Exec(event.Process.Msg["GID"])
 		if err != nil {
 			log.Panicln(err)
 		}
 	case "2":
-		_, err = tM.stmtGameIncreaseTeam2.Exec(event.Process.Msg["GID"], Shard)
+		_, err = tM.stmtGameIncreaseTeam2.Exec(event.Process.Msg["GID"])
 		if err != nil {
 			log.Panicln(err)
 		}

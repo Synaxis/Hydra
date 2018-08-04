@@ -81,7 +81,6 @@ type TheaterManager struct {
 	mapSetServerPlayerStatsVariableAmount map[int]*sql.Stmt
 }
 
-var Shard string
 
 const COUNTER_GID_KEY = "counters:GID"
 
@@ -130,7 +129,7 @@ func (tM *TheaterManager) prepareStatements() {
 	}
 
 	tM.stmtDeleteGameByGIDAndShard, err = tM.db.Prepare(
-		"DELETE FROM games WHERE gid = ? AND shard = ?")
+		"DELETE FROM games WHERE gid = ?")
 	if err != nil {
 		log.Fatalln("Error preparing stmtClearGameServerStats.", err.Error())
 	}
@@ -138,7 +137,6 @@ func (tM *TheaterManager) prepareStatements() {
 	tM.stmtAddGame, err = tM.db.Prepare(
 		"INSERT INTO games (" +
 			"	gid," +
-			"	shard," +
 			"	game_ip," +
 			"	game_port," +
 			"	game_version," +
@@ -153,7 +151,7 @@ func (tM *TheaterManager) prepareStatements() {
 			"	created_at," +
 			"	updated_at)" +
 			"VALUES" +
-			"	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())")
+			"	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())")
 	if err != nil {
 		log.Fatalln("Error preparing stmtAddGame.", err.Error())
 	}
@@ -162,7 +160,7 @@ func (tM *TheaterManager) prepareStatements() {
 		"UPDATE games SET " +
 			"	players_joining = players_joining + 1," +
 			"	updated_at = NOW()" +
-			"WHERE gid = ? AND shard = ?")
+			"WHERE gid = ?")
 	if err != nil {
 		log.Fatalln("Error preparing stmtGameIncreaseJoining.", err.Error())
 	}
@@ -173,7 +171,7 @@ func (tM *TheaterManager) prepareStatements() {
 			"	players_joining = players_joining - 1," +
 			"	team_1 = team_1 + 1," +
 			"	updated_at = NOW()" +
-			"WHERE gid = ? AND shard = ?")
+			"WHERE gid = ?")
 	if err != nil {
 		log.Fatalln("Error preparing stmtGameIncreaseTeam1.", err.Error())
 	}
@@ -184,7 +182,7 @@ func (tM *TheaterManager) prepareStatements() {
 			"	players_joining = players_joining - 1," +
 			"	team_2 = team_2 + 1," +
 			"	updated_at = NOW()" +
-			"WHERE gid = ? AND shard = ?")
+			"WHERE gid = ? ")
 	if err != nil {
 		log.Fatalln("Error preparing stmtGameIncreaseTeam2.", err.Error())
 	}
@@ -194,7 +192,7 @@ func (tM *TheaterManager) prepareStatements() {
 			"	players_connected = players_connected - 1," +
 			"	team_1 = team_1 - 1," +
 			"	updated_at = NOW()" +
-			"WHERE gid = ? AND shard = ?")
+			"WHERE gid = ? ")
 	if err != nil {
 		log.Fatalln("Error preparing stmtGameDecreaseTeam1.", err.Error())
 	}
@@ -204,7 +202,7 @@ func (tM *TheaterManager) prepareStatements() {
 			"	players_connected = players_connected - 1," +
 			"	team_2 = team_2 - 1," +
 			"	updated_at = NOW()" +
-			"WHERE gid = ? AND shard = ?")
+			"WHERE gid = ? ")
 	if err != nil {
 		log.Fatalln("Error preparing stmtGameDecreaseTeam2.", err.Error())
 	}
@@ -212,7 +210,7 @@ func (tM *TheaterManager) prepareStatements() {
 	tM.stmtUpdateGame, err = tM.db.Prepare(
 		"UPDATE games SET" +
 			"	updated_at = NOW()" +
-			"WHERE gid = ? AND shard = ?")
+			"WHERE gid = ?")
 	if err != nil {
 		log.Fatalln("Error preparing stmtUpdateGame.", err.Error())
 	}
@@ -408,9 +406,9 @@ func (tM *TheaterManager) close(event gs.EventClientClose) {
 				log.Errorln("Failed deleting settings for  "+event.Client.RedisState.Get("gdata:GID"), err.Error())
 			}
 
-			_, err = tM.stmtDeleteGameByGIDAndShard.Exec(event.Client.RedisState.Get("gdata:GID"), Shard)
+			_, err = tM.stmtDeleteGameByGIDAndShard.Exec(event.Client.RedisState.Get("gdata:GID"))
 			if err != nil {
-				log.Errorln("Failed deleting game for "+event.Client.RedisState.Get("gdata:GID")+" and shard "+Shard, err.Error())
+				log.Errorln("Failed deleting game for "+event.Client.RedisState.Get("gdata:GID"), err.Error())
 			}
 
 			// Delete game out of MM array

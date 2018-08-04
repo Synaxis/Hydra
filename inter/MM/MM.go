@@ -8,7 +8,6 @@ import (
 // Games - a list of gameServers
 var Games = make(map[string]*gs.Client)
 
-var Shard string
 
 // FindAvailableGID - returns a GID suitable for the player to join (ADD A PID HERE)
 func findGids() string {

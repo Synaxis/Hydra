@@ -1,0 +1,6 @@
+        _Redis/dump.rdb
+        glide.exe
+        glide.lock
+        glide.yaml
+        main.exe
+        vendor/
