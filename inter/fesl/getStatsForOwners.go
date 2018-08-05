@@ -17,7 +17,7 @@ func (fM *FeslManager) GetStatsForOwners(event gs.EventClientTLSCommand) {
 	Process := event.Process.Msg
 
 	Packet := make(map[string]string)
-	Packet["TXN"] = "GetStats"
+	Packet[TXN] = "GetStats"
 	//////////////////////////////
 
 	// Get the owner pids from redis

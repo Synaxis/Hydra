@@ -38,7 +38,7 @@ func (fM *FeslManager) GetStats(event gs.EventClientTLSCommand) {
 	log.Noteln(Process["owner"])
 
 	loginPacket := make(map[string]string)
-	loginPacket["TXN"] = "GetStats"
+	loginPacket[TXN] = "GetStats"
 	loginPacket["ownerId"] = owner
 	loginPacket["ownerType"] = "1"
 

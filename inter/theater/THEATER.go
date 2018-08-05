@@ -11,6 +11,9 @@ import (
 	"github.com/go-redis/redis"
 )
 
+const (
+	TXN = "TXN"
+)
 // GameClient Represents a game client connected to theater
 type GameClient struct {
 	ip   string

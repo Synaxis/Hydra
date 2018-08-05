@@ -20,7 +20,7 @@ func (fM *FeslManager) hello(event gs.EventClientTLSCommand) {
 
 	if !fM.server {
 		getSession := make(map[string]string)
-		getSession["TXN"] = "GetSessionId"
+		getSession[TXN] = "GetSessionId"
 		event.Client.Answer("gsum", getSession, 0)
 	}
 
@@ -35,7 +35,7 @@ func (fM *FeslManager) hello(event gs.EventClientTLSCommand) {
 	event.Client.RedisState.SetM(saveRedis)
 
 	helloPacket := make(map[string]string)
-	helloPacket["TXN"] = "Hello"
+	helloPacket[TXN] = "Hello"
 	helloPacket["domainPartition.domain"] = "eagames"
 	if fM.server {
 		helloPacket["domainPartition.subDomain"] = "bfwest-server"

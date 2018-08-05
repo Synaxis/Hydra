@@ -13,7 +13,7 @@ func (tM *TheaterManager) ECHO(event gs.SocketUDPEvent) {
 
 	answer := make(map[string]string)
 	answer["TID"] = command.Msg["TID"]
-	answer["TXN"] = command.Msg["TXN"]
+	answer[TXN] = command.Msg[TXN]
 	answer["IP"] = event.Addr.IP.String()
 	answer["PORT"] = strconv.Itoa(event.Addr.Port)
 	answer["ERR"] = "0"

@@ -12,7 +12,7 @@ func (fM *FeslManager) GetPingSites(event gs.EventClientTLSCommand) {
 		return
 	}
 	answer := make(map[string]string)
-	answer["TXN"] = "GetPingSites"
+	answer[TXN] = "GetPingSites"
 	answer["minPingSitesToPing"] = "0"
 	answer["pingSites.[]"] = "0"
 	event.Client.Answer(event.Process.Query, answer, event.Process.PayloadID)

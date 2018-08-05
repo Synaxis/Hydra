@@ -12,12 +12,16 @@ const (
 // Start - Handle PlayNow! - Start the Search
 func (fM *FeslManager) Start(event gs.EventClientTLSCommand) {
 	log.Noteln("==Start==")
+
 	answer := make(map[string]string)
-	answer["TXN"] = "Start"
+
+	answer[TXN] = "Start"
 	answer["id.id"] = "1"
 	answer["id.partition"] = event.Process.Msg[partition]
-	answer["poolTimeout"] = "60"
+	answer["poolTimeout"] = "NO_POOL_TIMEOUT"
 	answer["firewallType"] = "0"
+	answer["GameProtocolVersion"] = "" 
+	answer["players.0.props.{debugHostAssignment}"] = "1"
 	event.Client.Answer(event.Process.Query, answer, event.Process.PayloadID)
 
 	fM.Status(event)

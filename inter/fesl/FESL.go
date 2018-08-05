@@ -12,6 +12,11 @@ import (
 	"github.com/go-redis/redis"
 )
 
+const (
+	TXN = "TXN"
+)
+
+
 // FeslManager - handles incoming and outgoing FESL data
 type FeslManager struct {
 	name          string
@@ -24,6 +29,7 @@ type FeslManager struct {
 	server        bool
 
 	// Database Statements
+	stmtGetBookmarks					*sql.Stmt
 	stmtGetUserByGameToken              *sql.Stmt
 	stmtGetServerBySecret               *sql.Stmt
 	stmtGetServerByID                   *sql.Stmt
@@ -169,6 +175,16 @@ func (fM *FeslManager) prepareStatements() {
 	if err != nil {
 		log.Fatalln("Error preparing stmtGetServerBySecret.", err.Error())
 	}
+	
+
+	fM.stmtGetBookmarks, err = fM.db.Prepare(
+	 "SELECT gid" +
+		"	FROM game_player_server_preferences" +
+		"	WHERE userid=?")
+
+		if err != nil {
+			log.Fatalln("Error preparing stmtGetServerBySecret.", err.Error())
+		}
 
 	fM.stmtGetServerByID, err = fM.db.Prepare(
 		"SELECT game_servers.id, users.id, game_servers.servername, game_servers.secretKey, users.username" +
@@ -289,7 +305,7 @@ func (fM *FeslManager) run() {
 			case event.Name == "client.close":
 				fM.close(event.Data.(gs.EventClientTLSClose))
 			case event.Name == "client.command":
-				log.Debugf("Event %s.%s: %v", event.Name, event.Data.(gs.EventClientTLSCommand).Process.Msg["TXN"], event.Data.(gs.EventClientTLSCommand).Process)
+				log.Debugf("Event %s.%s: %v", event.Name, event.Data.(gs.EventClientTLSCommand).Process.Msg[TXN], event.Data.(gs.EventClientTLSCommand).Process)
 			default:
 				log.Debugf("Event %s: %v", event.Name, event.Data)
 			}
@@ -318,7 +334,7 @@ func (fM *FeslManager) newClient(event gs.EventNewClientTLS) {
 	}
 
 	memCheck := make(map[string]string)
-	memCheck["TXN"] = "MemCheck"
+	memCheck[TXN] = "MemCheck"
 	memCheck["memcheck.[]"] = "0"
 	memCheck["salt"] = "4"
 	event.Client.Answer("fsys", memCheck, 0xC0000000)
@@ -336,7 +352,7 @@ func (fM *FeslManager) newClient(event gs.EventNewClientTLS) {
 					return
 				}
 				memCheck := make(map[string]string)
-				memCheck["TXN"] = "MemCheck"
+				memCheck[TXN] = "MemCheck"
 				memCheck["memcheck.[]"] = "0"
 				memCheck["salt"] = "4"
 				event.Client.Answer("fsys", memCheck, 0xC0000000)

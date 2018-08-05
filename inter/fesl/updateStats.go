@@ -108,7 +108,7 @@ func (fM *FeslManager) UpdateStats(event gs.EventClientTLSCommand) {
 			}
 
 			if Process["u."+convert(i)+".s."+convert(j)+".ut"] != "3" {
-				log.Noteln("Updating new Stats:",
+				log.Noteln("Updat NEW Stats:",
 					Process["u."+convert(i)+".s."+convert(j)+".k"],
 					Process["u."+convert(i)+".s."+convert(j)+".t"],
 					Process["u."+convert(i)+".s."+convert(j)+".ut"],
@@ -133,7 +133,7 @@ func (fM *FeslManager) UpdateStats(event gs.EventClientTLSCommand) {
 						log.Errorln("Skipping stat "+key, err)
 
 						ans := make(map[string]string)
-						ans["TXN"] = "UpdateStats"
+						ans[TXN] = "UpdateStats"
 
 						event.Client.Answer(event.Process.Query, ans, event.Process.PayloadID)
 						return
@@ -146,7 +146,7 @@ func (fM *FeslManager) UpdateStats(event gs.EventClientTLSCommand) {
 						if key == "c_wallet_hero" && newValue < 0 {
 							log.Errorln("Negative Value c_wallet_hero < 0", key)
 							ans := make(map[string]string)
-							ans["TXN"] = "UpdateStats"
+							ans[TXN] = "UpdateStats"
 							event.Client.Answer(event.Process.Query, ans, event.Process.PayloadID)
 							return
 						}
@@ -156,7 +156,7 @@ func (fM *FeslManager) UpdateStats(event gs.EventClientTLSCommand) {
 						value = Process["u."+convert(i)+".s."+convert(j)+".v"]
 						log.Errorln("Not allowed to process Stat", key)
 						ans := make(map[string]string)
-						ans["TXN"] = "UpdateStats"
+						ans[TXN] = "UpdateStats"
 						event.Client.Answer(event.Process.Query, ans, event.Process.PayloadID)
 						return
 					}
