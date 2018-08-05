@@ -87,7 +87,7 @@ func (tM *TheaterManager) EGAM(event gs.EventClientFESLCommand) {
 		//C L I E N T
 		clientEGEG := make(map[string]string)
 		clientEGEG["TID"] = "0"
-		clientEGEG["PL"] = "pc"
+		clientEGEG["PL"] = "PC"
 		clientEGEG["TICKET"] = "2018751182"
 		clientEGEG["PID"] = pid
 		clientEGEG["I"] = gsData.Get("IP")

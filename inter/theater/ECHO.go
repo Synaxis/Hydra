@@ -7,7 +7,7 @@ import (
 	"github.com/Synaxis/Hydra/inter/log"
 )
 
-// ECHO - SHARED called like some heartbeat
+// ECHO - Broadcast The Server to NAT Interface
 func (tM *TheaterManager) ECHO(event gs.SocketUDPEvent) {
 	command := event.Data.(*gs.CommandFESL)
 
@@ -17,6 +17,7 @@ func (tM *TheaterManager) ECHO(event gs.SocketUDPEvent) {
 	answer["IP"] = event.Addr.IP.String()
 	answer["PORT"] = strconv.Itoa(event.Addr.Port)
 	answer["ERR"] = "0"
+	answer["UID"] = command.Msg["UID"]
 	answer["TYPE"] = "1"
 	err := tM.socketUDP.Answer("ECHO", answer, 0x0, event.Addr)
 	if err != nil {

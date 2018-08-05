@@ -17,7 +17,7 @@ func (fM *FeslManager) NuLookupUserInfo(event gs.EventClientTLSCommand) {
 	Process := event.Process.Msg
 	Int := strconv.Itoa
 
-	if event.Client.RedisState.Get("clientType") == "server" && Process["userInfo.0.userName"] == "MargeSimpson" {
+	if event.Client.RedisState.Get("clientType") == "server" && Process["userInfo.0.userName"] == "Test-Server" {
 		log.Noteln("===SERVER CONNECTED=== " + Process["userInfo.0.userName"])
 		fM.NuLookupUserInfoServer(event)
 		return
@@ -25,7 +25,7 @@ func (fM *FeslManager) NuLookupUserInfo(event gs.EventClientTLSCommand) {
 
 	log.Noteln("===ClientConnected=== " + Process["userInfo.0.userName"])
 
-	personaPacket := make(map[string]string)
+	answer := make(map[string]string)
 
 	keys, _ := strconv.Atoi(Process["userInfo.[]"])
 	for i := 0; i < keys; i++ {
@@ -36,17 +36,17 @@ func (fM *FeslManager) NuLookupUserInfo(event gs.EventClientTLSCommand) {
 		if err != nil {
 			return
 		}
-		personaPacket[TXN] = "NuLookupUserInfo"
-		personaPacket["userInfo."+Int(i)+".userName"] = heroName
-		personaPacket["userInfo."+Int(i)+".userId"] = id
-		personaPacket["userInfo."+Int(i)+".masterUserId"] = id
-		personaPacket["userInfo."+Int(i)+".namespace"] = "MAIN"
-		personaPacket["userInfo."+Int(i)+".xuid"] = "24"
+		answer[TXN] = "NuLookupUserInfo"
+		answer["userInfo."+Int(i)+".userName"] = heroName
+		answer["userInfo."+Int(i)+".userId"] = id
+		answer["userInfo."+Int(i)+".masterUserId"] = id
+		answer["userInfo."+Int(i)+".namespace"] = "MAIN"
+		answer["userInfo."+Int(i)+".xuid"] = "24"
 	}
 
-	personaPacket["userInfo.[]"] = Int(keys)
+	answer["userInfo.[]"] = Int(keys)
 
-	event.Client.Answer(event.Process.Query, personaPacket, event.Process.PayloadID)
+	event.Client.Answer(event.Process.Query, answer, event.Process.PayloadID)
 }
 
 // NuLookupUserInfoServer - Gets basic information about a game user

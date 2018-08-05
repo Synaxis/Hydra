@@ -20,7 +20,9 @@ func (fM *FeslManager) Start(event gs.EventClientTLSCommand) {
 	answer["id.partition"] = event.Process.Msg[partition]
 	answer["poolTimeout"] = "NO_POOL_TIMEOUT"
 	answer["firewallType"] = "0"
-	answer["GameProtocolVersion"] = "" 
+	answer["PlaynowOptionsVersion"] = "1"
+	answer["GameProtocolVersion"] = ""	
+	answer["DebugThreshold"] = "low"
 	answer["players.0.props.{debugHostAssignment}"] = "1"
 	event.Client.Answer(event.Process.Query, answer, event.Process.PayloadID)
 

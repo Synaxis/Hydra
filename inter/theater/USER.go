@@ -28,6 +28,6 @@ func (tM *TheaterManager) USER(event gs.EventClientFESLCommand) {
 	answer := make(map[string]string)
 	answer["TID"] = event.Process.Msg["TID"]
 	answer["NAME"] = lkeyRedis.Get("name")
-	answer["CID"] = ""
+	answer["CID"] = lkeyRedis.Get("id")
 	event.Client.Answer(event.Process.Query, answer, 0x0)
 }

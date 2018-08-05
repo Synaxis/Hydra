@@ -143,7 +143,7 @@ func (clientTLS *ClientTLS) readFESL(data []byte) []byte {
 
 		binary.Read(p, binary.BigEndian, &payloadLen)
 
-		log.Noteln("Message: " + payloadType + " - " + fmt.Sprint(payloadID) + " - " + fmt.Sprint(payloadLen))
+		//log.Noteln("Message: " + payloadType + " - " + fmt.Sprint(payloadID) + " - " + fmt.Sprint(payloadLen))
 
 		if (payloadLen - 12) > uint32(len(p.Bytes())) {
 			log.Noteln("Packet not fully read")

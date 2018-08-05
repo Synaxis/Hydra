@@ -120,7 +120,7 @@ func (socket *SocketTLS) run() {
 				conn.Close()
 			}
 
-			tlscon.SetDeadline(time.Now().Add(time.Second * 15))
+			tlscon.SetDeadline(time.Now().Add(time.Second * 10))
 
 			err = tlscon.Handshake()
 			if err != nil {

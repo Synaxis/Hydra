@@ -20,5 +20,7 @@ func (tM *TheaterManager) EGRS(event gs.EventClientFESLCommand) {
 
 	answer := make(map[string]string)
 	answer["TID"] = event.Process.Msg["TID"]
+	answer["LID"] = event.Process.Msg["PID"]
+	answer["PID"] = event.Process.Msg["LID"]
 	event.Client.Answer("EGRS", answer, 0x0)
 }
